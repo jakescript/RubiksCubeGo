@@ -1,24 +1,23 @@
 package cube
 
+import "fmt"
+
 type face [][]int
-type cubie []int
+type row []int
 
 // Cubic : contains the slice of face values for each face creating a cube
 type Cubic []face
 
-var faceSchema face
-var cubieRows cubie
-
 /*
 faces as per scheme on wiki--
 	red			blue		orange		green		yellow		white
-	front 		right		back		left		btm			top
+	front 		right		back		left		down		up
 	[0, 0, 0]	[1, 1, 1]	[2, 2, 2] 	[3, 3, 3]	[4, 4, 4]	[5, 5, 5]
 	[0, 0, 0]	[1, 1, 1]	[2, 2, 2]	[3, 3, 3]	[4, 4, 4]	[5, 5, 5]
 	[0, 0, 0]	[1, 1, 1]	[2, 2, 2]	[3, 3, 3]	[4, 4, 4]	[5, 5, 5]
 */
 
-// GenerateCube : consist of 6 faces
+// GenerateCube : Returns a new cube that is solved
 func GenerateCube() Cubic {
 	rows := 3
 	cols := 3
@@ -35,15 +34,27 @@ func GenerateCube() Cubic {
 }
 
 func buildFace(r, c, faceVal int) face {
-	faceSchema = make(face, r)
-	cubieRows = make(cubie, r*c) // creates a cubie with len of 9
-	// modify cubies to make slices of 9 for 0-5
-	for i := 0; i < len(cubieRows); i++ {
-		cubieRows[i] = faceVal
+	faceSchema := make(face, r) // creates empty face schema
+	cubieFace := make(row, r*c) // creates all cubies in face; len = 9
+	for i := range cubieFace {
+		cubieFace[i] = faceVal // fills rows with correct face vals
 	}
-	// splits cubieRows into slice of 3 slices
+
+	// splits cubieFace into slice of 3 slices and adds them to
+	// faceSchema creating a generated face
 	for j := range faceSchema {
-		faceSchema[j] = cubieRows[j*c : (j+1)*c]
+		faceSchema[j] = cubieFace[j*c : (j+1)*c]
 	}
 	return faceSchema
+}
+
+//PrintCube : Formats to Stdout Cube Visualization
+func (c Cubic) PrintCube() {
+	fmt.Printf("Here Is Your Cube: \n")
+
+	pos := []string{"F", "R", "B", "L", "D", "U"}
+
+	for i, v := range pos {
+		fmt.Printf("%v: %v\n", v, c[i])
+	}
 }
