@@ -17,6 +17,6 @@ func main(){
 ```
 
 ### Documentation & Deep Explination:
-Read a very detailed markdown file about the code [here](https://github.com/jakescript/RubiksCubeGo/blob/master/docs.md)  
+Read a very detailed markdown file about the code [here](https://github.com/jakescript/RubiksCubeGo/blob/master/docs/docs.md)  
 
 enjoy the message
